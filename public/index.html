@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>XYZ Laboratories - Login</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: url("images/background.jpg") no-repeat center center fixed;
@@ -21,7 +16,6 @@
       height: 100vh;
       color: #333;
     }
-
     .container {
       background-color: rgba(255, 255, 255, 0.95);
       padding: 30px;
@@ -30,75 +24,27 @@
       width: 350px;
       text-align: center;
     }
-
-    .logo {
-      width: 100px;
-      margin-bottom: 20px;
+    .logo { width: 100px; margin-bottom: 20px; }
+    h2 { margin-bottom: 10px; color: #007BFF; }
+    .ip-address { font-size: 12px; color: #666; margin-bottom: 20px; }
+    input[type="text"], input[type="password"] {
+      width: 100%; padding: 10px; margin-bottom: 12px;
+      border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
     }
-
-    h2 {
-      margin-bottom: 10px;
-      color: #007BFF;
-    }
-
-    .ip-address {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
     .btn {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      width: 100%; padding: 10px; margin-top: 10px;
+      border: none; border-radius: 6px; font-size: 15px;
+      cursor: pointer; transition: background 0.3s ease;
     }
-
-    .btn-signin {
-      background-color: #007BFF;
-      color: white;
+    .btn-signin { background-color: #007BFF; color: white; }
+    .btn-signin:hover { background-color: #0056b3; }
+    .btn-create { background-color: #28a745; color: white; }
+    .btn-create:hover { background-color: #218838; }
+    .forgot, .admin-panel {
+      display: block; margin-top: 10px; font-size: 13px;
+      color: #007BFF; text-decoration: none;
     }
-
-    .btn-signin:hover {
-      background-color: #0056b3;
-    }
-
-    .btn-create {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .btn-create:hover {
-      background-color: #218838;
-    }
-
-    .forgot,
-    .admin-panel {
-      display: block;
-      margin-top: 10px;
-      font-size: 13px;
-      color: #007BFF;
-      text-decoration: none;
-    }
-
-    .forgot:hover,
-    .admin-panel:hover {
-      text-decoration: underline;
-    }
+    .forgot:hover, .admin-panel:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -119,6 +65,9 @@
   </div>
 
   <script>
+    // Change this to your Render backend URL
+    const backendURL = "https://lab-company.onrender.com";
+
     // Fetch and display the IP address
     fetch("https://api.ipify.org?format=json")
       .then(response => response.json())
@@ -136,7 +85,7 @@
       const password = document.getElementById("password").value;
 
       try {
-        const response = await fetch("http://localhost:5000/login", {
+        const response = await fetch(`${backendURL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password })
