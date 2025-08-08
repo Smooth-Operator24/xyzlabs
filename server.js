@@ -30,3 +30,4 @@ app.post('/register', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🧪 Amin App backend running at http://localhost:${PORT}`);
 });
+
