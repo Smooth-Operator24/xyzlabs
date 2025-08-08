@@ -64,45 +64,41 @@
     <button class="btn btn-create" onclick="location.href='create.html'">Create Account</button>
   </div>
 
-  <script>
-    // Change this to your Render backend URL
-    const backendURL = "https://lab-company.onrender.com";
+ <script>
+  const backendURL = "https://lab-company.onrender.com";
 
-    // Fetch and display the IP address
-    fetch("https://api.ipify.org?format=json")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("ipAddress").textContent = "Your IP: " + data.ip;
-      })
-      .catch(() => {
-        document.getElementById("ipAddress").textContent = "Unable to detect IP.";
+  // Show IP
+  fetch("https://api.ipify.org?format=json")
+    .then(res => res.json())
+    .then(data => document.getElementById("ipAddress").textContent = "Your IP: " + data.ip)
+    .catch(() => document.getElementById("ipAddress").textContent = "Unable to detect IP.");
+
+  // Login
+  document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    try {
+      const response = await fetch(`${backendURL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
       });
 
-    // Login form submission
-    document.getElementById("loginForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
+      const data = await response.json();
 
-      try {
-        const response = await fetch(`${backendURL}/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          localStorage.setItem("token", data.token);
-          window.location.href = "dashboard.html";
-        } else {
-          alert(data.error || "Login failed");
-        }
-      } catch (err) {
-        alert("Error connecting to server.");
+      if (response.ok) {
+        localStorage.setItem("username", data.user.username);
+        window.location.href = "dashboard.html";
+      } else {
+        alert(data.error || "Login failed");
       }
-    });
-  </script>
+    } catch {
+      alert("Error connecting to server.");
+    }
+  });
+</script>
 </body>
 </html>
+
